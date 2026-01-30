@@ -68,14 +68,17 @@ export default function HomePage() {
     }
   }
 
-  const handleItemClick = (item: { id: string; title: string; image: string; type: "ebook" }) => {
-    const ebook = ebooks.find(e => e.id === item.id);
-    if (ebook) {
-      setPdfViewer({
-        isOpen: true,
-        ebookId: ebook.id,
-        title: ebook.title,
-      });
+  const handleItemClick = (item: { id: string; title: string; image: string; type: "video" | "ebook" }) => {
+    // Apenas processar se for e-book
+    if (item.type === "ebook") {
+      const ebook = ebooks.find(e => e.id === item.id);
+      if (ebook) {
+        setPdfViewer({
+          isOpen: true,
+          ebookId: ebook.id,
+          title: ebook.title,
+        });
+      }
     }
   };
 
@@ -83,10 +86,13 @@ export default function HomePage() {
     setEbookDialog({ isOpen: true, ebook: null });
   };
 
-  const handleEditEbook = (item: { id: string; title: string; image: string; type: "ebook" }) => {
-    const ebook = ebooks.find(e => e.id === item.id);
-    if (ebook) {
-      setEbookDialog({ isOpen: true, ebook });
+  const handleEditEbook = (item: { id: string; title: string; image: string; type: "video" | "ebook" }) => {
+    // Apenas processar se for e-book
+    if (item.type === "ebook") {
+      const ebook = ebooks.find(e => e.id === item.id);
+      if (ebook) {
+        setEbookDialog({ isOpen: true, ebook });
+      }
     }
   };
 
@@ -204,10 +210,7 @@ export default function HomePage() {
             }))}
             variant="ebook"
             onItemClick={handleItemClick}
-            onEdit={isAdmin ? (item) => {
-              const ebook = ebooks.find(e => e.id === item.id);
-              if (ebook) handleEditEbook(ebook);
-            } : undefined}
+            onEdit={isAdmin ? handleEditEbook : undefined}
             onDelete={isAdmin ? async (id) => {
               if (confirm("Tem certeza que deseja excluir este e-book?")) {
                 try {

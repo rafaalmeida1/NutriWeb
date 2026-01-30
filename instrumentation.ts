@@ -1,15 +1,7 @@
+// Import polyfill early to ensure it's available before any code uses Promise.withResolvers
+import './polyfills/promise-with-resolvers';
+
 export async function register() {
-  // Polyfill for Promise.withResolvers (Node.js 22+)
-  if (typeof Promise.withResolvers === 'undefined') {
-    Promise.withResolvers = function () {
-      let resolve: (value: any) => void;
-      let reject: (reason?: any) => void;
-      const promise = new Promise((res, rej) => {
-        resolve = res;
-        reject = rej;
-      });
-      return { promise, resolve: resolve!, reject: reject! };
-    };
-  }
+  // Polyfill is applied in the imported file above
 }
 

@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/contexts/auth-context'
+// Import polyfill early to ensure it's available before any code uses Promise.withResolvers
+import '../polyfills/promise-with-resolvers'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
