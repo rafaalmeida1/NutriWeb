@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    instrumentationHook: true,
+  },
+  // Disable source maps in development to avoid warnings
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;
