@@ -10,17 +10,23 @@ export function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    // Verificar preferência salva ou preferência do sistema
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    // Verificar estado atual do DOM primeiro (pode ter sido definido pelo script inline)
+    const hasDarkClass = document.documentElement.classList.contains("dark");
     
-    const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-    setIsDark(shouldBeDark);
-    
-    if (shouldBeDark) {
-      document.documentElement.classList.add("dark");
+    // Se não há classe, verificar preferência salva ou do sistema
+    if (!hasDarkClass) {
+      const savedTheme = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+      
+      if (shouldBeDark) {
+        document.documentElement.classList.add("dark");
+        setIsDark(true);
+      } else {
+        setIsDark(false);
+      }
     } else {
-      document.documentElement.classList.remove("dark");
+      setIsDark(true);
     }
   }, []);
 

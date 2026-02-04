@@ -46,10 +46,16 @@ export default function RootLayout({
             __html: `
               (function() {
                 const savedTheme = localStorage.getItem("theme");
-                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-                if (shouldBeDark) {
+                if (savedTheme === "dark") {
                   document.documentElement.classList.add("dark");
+                } else if (savedTheme === "light") {
+                  document.documentElement.classList.remove("dark");
+                } else {
+                  // Se não há preferência salva, usar preferência do sistema
+                  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  if (prefersDark) {
+                    document.documentElement.classList.add("dark");
+                  }
                 }
               })();
             `,
