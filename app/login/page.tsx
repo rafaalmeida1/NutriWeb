@@ -3,6 +3,7 @@
 import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function LoginContent() {
   const router = useRouter();
@@ -28,6 +29,11 @@ function LoginContent() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      {/* Toggle de tema no canto superior direito */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+      
       <div className="w-full max-w-md space-y-8">
         {/* Logo e Título */}
         <div className="text-center">

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Plus, Mail, User, Calendar, CheckCircle, XCircle, Clock, Trash2, Send, X } from "lucide-react";
 
 interface Invite {
@@ -176,6 +177,7 @@ export default function InvitesPage() {
           </div>
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
+          <ThemeToggle />
           <Button variant="outline" size="sm" className="text-xs sm:text-sm px-2 sm:px-4" onClick={() => router.push("/")}>
             <span className="hidden sm:inline">Voltar</span>
             <span className="sm:hidden">←</span>

@@ -6,6 +6,7 @@ import { ContentCarousel } from "@/components/content-carousel";
 import { PdfViewer } from "@/components/pdf-viewer";
 import { AddEbookCard } from "@/components/add-ebook-card";
 import { EbookDialog } from "@/components/ebook-dialog";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useAuth } from "@/contexts/auth-context";
 import { api, type Ebook } from "@/lib/api";
 import { Users, LogOut, Image as ImageIcon, Play } from "lucide-react";
@@ -156,6 +157,7 @@ export default function HomePage() {
                 </span>
               </>
             )}
+            <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
