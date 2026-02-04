@@ -13,7 +13,8 @@ function LoginContent() {
     // Verificar se já está autenticado
     const token = localStorage.getItem("auth_token");
     if (token) {
-      router.push("/");
+      // Usar replace para evitar adicionar ao histórico
+      router.replace("/");
       return;
     }
   }, [router]);

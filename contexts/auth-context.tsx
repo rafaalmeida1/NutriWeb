@@ -60,13 +60,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadUser();
     
     // Escutar mudanças no localStorage (para quando o token é atualizado em outra aba)
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "auth_token") {
+    const handleStorageChange = (e: StorageEvent | Event) => {
+      // StorageEvent para mudanças entre abas, Event customizado para mesma aba
+      if (e instanceof StorageEvent) {
+        if (e.key === "auth_token") {
+          loadUser();
+        }
+      } else {
+        // Event customizado disparado quando token é salvo na mesma aba
         loadUser();
       }
     };
     
     window.addEventListener("storage", handleStorageChange);
+    // Escutar evento customizado para atualização na mesma aba
+    window.addEventListener("auth-token-updated", handleStorageChange);
     
     // Verificar token periodicamente (a cada 30 segundos)
     const interval = setInterval(() => {
@@ -75,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     return () => {
       window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("auth-token-updated", handleStorageChange);
       clearInterval(interval);
     };
   }, []);

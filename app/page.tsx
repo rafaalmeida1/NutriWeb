@@ -28,12 +28,15 @@ export default function HomePage() {
   }>({ isOpen: false });
 
   useEffect(() => {
+    // Aguardar um pouco mais para garantir que o AuthContext tenha tempo de carregar
     if (!authLoading && !user) {
       const timer = setTimeout(() => {
-        if (!user) {
-          router.push("/login");
+        // Verificar novamente o localStorage diretamente antes de redirecionar
+        const token = localStorage.getItem("auth_token");
+        if (!token && !user) {
+          router.replace("/login");
         }
-      }, 100);
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [user, authLoading, router]);
